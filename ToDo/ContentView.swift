@@ -6,16 +6,77 @@
 //  Copyright © 2019 rickb. All rights reserved.
 //
 
+import UIKit
 import SwiftUI
 import Combine
+import ExtraKit
 
 struct ContentView : View {
 	@ObjectBinding var toDoItems: ToDoItems
+	@State var showingInput: Bool = false
+	@State var inputText: String = ""
 
 	var body: some View {
-		List(toDoItems.items) {
-			ToDoItemRow(toDoItem: $0)
+		NavigationView {
+			ZStack {
+				List(toDoItems.items) { item in
+					HStack {
+						ToDoItemRow(toDoItem: item)
+						Spacer()
+						UIButtonView(action: {
+							self.toDoItems.items.removeAll { $0 === item }
+						}) {
+							$0.setTitle(NSLocalizedString("Delete", comment: ""), for: .normal)
+							$0.setTitleColor(.red, for: .normal)
+					   }
+					}
+				}
+				.navigationBarTitle(Text("Items"), displayMode: .inline)
+				.navigationBarItems(trailing: Button(action: {
+					self.showingInput.toggle()
+				}) { Text("Add") })
+
+				if showingInput {
+					TextField($inputText) {
+						let newItem = ToDoItem(id: UUID(), title: self.inputText, isSelected: true)
+						self.toDoItems.items.append(newItem)
+						self.toDoItems.reorderItems()
+						self.showingInput = false
+						self.inputText = ""
+					}.textFieldStyle(.roundedBorder)
+				}
+			}
 		}
+	}
+}
+
+struct UIButtonView: UIViewRepresentable {
+
+	let button = UIButton()
+
+	init(action: @escaping () -> Void, label: (UIButton) -> Void) {
+		button.on(.touchUpInside) { _ in
+			action()
+		}
+		label(button)
+	}
+
+    func makeUIView(context: Context) -> UIButton {
+		return button
+	}
+
+	func updateUIView(_ uiView: UIButton, context: Context) {
+	}
+}
+
+struct UIKitView<T: UIView>: UIViewRepresentable {
+	let view: T
+
+    func makeUIView(context: Context) -> T {
+		return view
+	}
+
+	func updateUIView(_ uiView: T, context: Context) {
 	}
 }
 
@@ -38,7 +99,7 @@ struct ToDoItemRow: View {
 	}
 }
 
-class ToDoItem: Identifiable, BindableObject {
+class ToDoItem: Identifiable, BindableObject, Codable {
 	let id: UUID
 	let title: String
 	var isSelected: Bool {
@@ -53,13 +114,22 @@ class ToDoItem: Identifiable, BindableObject {
 		self.title = title
 		self.isSelected = isSelected
 	}
+
+	enum CodingKeys: String, CodingKey {
+		case id, title, isSelected
+	}
 }
 
-class ToDoItems: BindableObject {
+class ToDoItems: BindableObject, Codable {
+
+	enum CodingKeys: String, CodingKey {
+		case items
+	}
 
 	var items: [ToDoItem] = [] {
 		didSet {
 			didChange.send(())
+			listeners.forEach { $0.cancel() }
 			items.forEach { item in
 				listeners.append(item.didChange.sink { [weak self] in
 					self?.reorderItems()
@@ -67,11 +137,10 @@ class ToDoItems: BindableObject {
 			}
 		}
 	}
-	private var listeners = [Cancellable]()
-
+	var listeners = [Cancellable]()
 	let didChange = PassthroughSubject<Void, Never>()
 
-	private func reorderItems() {
+	func reorderItems() {
 		self.items = items.stableSorted { a, b in
 			if a.isSelected == b.isSelected { return false }
 			return (a.isSelected && !b.isSelected)

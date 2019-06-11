@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ExtraKit",
+        "repositoryURL": "https://github.com/rickbdotcom/ExtraKit",
+        "state": {
+          "branch": "swift/5.1",
+          "revision": "a9811d7510b826575fd6b43290cf9d577c2c8ac7",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

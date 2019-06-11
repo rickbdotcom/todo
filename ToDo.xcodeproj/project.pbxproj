@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D4E2A8F22B064F900DDA8B8 /* ExtraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4E2A8E22B064F900DDA8B8 /* ExtraKit */; };
 		0D8C74BA22AE95FA005B6266 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C74B922AE95FA005B6266 /* AppDelegate.swift */; };
 		0D8C74BC22AE95FA005B6266 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C74BB22AE95FA005B6266 /* SceneDelegate.swift */; };
 		0D8C74BE22AE95FA005B6266 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C74BD22AE95FA005B6266 /* ContentView.swift */; };
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D4E2A8F22B064F900DDA8B8 /* ExtraKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +93,9 @@
 			dependencies = (
 			);
 			name = ToDo;
+			packageProductDependencies = (
+				0D4E2A8E22B064F900DDA8B8 /* ExtraKit */,
+			);
 			productName = ToDo;
 			productReference = 0D8C74B622AE95FA005B6266 /* ToDo.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +124,9 @@
 				Base,
 			);
 			mainGroup = 0D8C74AD22AE95FA005B6266;
+			packageReferences = (
+				0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */,
+			);
 			productRefGroup = 0D8C74B722AE95FA005B6266 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -342,6 +350,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rickbdotcom/ExtraKit";
+			requirement = {
+				branch = swift/5.1;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0D4E2A8E22B064F900DDA8B8 /* ExtraKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */;
+			productName = ExtraKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0D8C74AE22AE95FA005B6266 /* Project object */;
 }
