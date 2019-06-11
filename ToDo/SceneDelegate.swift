@@ -15,7 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		let window = UIWindow(frame: UIScreen.main.bounds)
-		window.rootViewController = UIHostingController(rootView: ContentView(toDoItems: []))
+
+		let items = [
+			ToDoItem(id: UUID(), title: "Hello", isSelected: false),
+			ToDoItem(id: UUID(), title: "Goodbye", isSelected: false)
+		]
+		let toDoItems = ToDoItems()
+		toDoItems.items = items
+
+		window.rootViewController = UIHostingController(rootView: ContentView(toDoItems: toDoItems))
 		self.window = window
 		window.makeKeyAndVisible()
 	}
