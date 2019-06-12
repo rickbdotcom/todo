@@ -11,12 +11,8 @@ import Combine
 
 class ToDoItem: Codable {
 	let id: UUID
-	let title: String
-	var isSelected: Bool {
-		didSet {
-			didChange.send(())
-		}
-	}
+	var title: String { didSet { didChange.send(()) } }
+	var isSelected: Bool { didSet { didChange.send(()) } }
 	let didChange = PassthroughSubject<Void, Never>()
 
 	init(id: UUID, title: String, isSelected: Bool) {
@@ -30,11 +26,7 @@ class ToDoItem: Codable {
 	}
 }
 
-class ToDoItems: Codable {
-
-	enum CodingKeys: String, CodingKey {
-		case items
-	}
+class ToDoItems {
 
 	private(set) var items: [ToDoItem] = [] {
 		didSet {
@@ -49,7 +41,7 @@ class ToDoItems: Codable {
 	}
 	var listeners = [Cancellable]()
 	let didChange = PassthroughSubject<Void, Never>()
-
+	
 	init(items: [ToDoItem] = []) {
 		set(items: items)
 	}

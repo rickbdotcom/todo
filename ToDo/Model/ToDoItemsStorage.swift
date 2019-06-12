@@ -18,7 +18,7 @@ class ToDoItemsStorage {
 		self.url = url
 		do {
 			let data = try Data(contentsOf: url)
-			toDoItems = try JSONDecoder().decode(ToDoItems.self, from: data)
+			toDoItems = ToDoItems(items: try JSONDecoder().decode([ToDoItem].self, from: data))
 		} catch {
 			toDoItems = ToDoItems()
 		}
@@ -32,6 +32,6 @@ class ToDoItemsStorage {
 	}
 
 	func save() {
-		try? (try? JSONEncoder().encode(toDoItems))?.write(to: url)
+		try? (try? JSONEncoder().encode(toDoItems.items))?.write(to: url)
 	}
 }

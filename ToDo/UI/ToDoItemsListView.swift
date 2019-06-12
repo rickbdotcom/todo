@@ -24,6 +24,7 @@ struct ToDoItemsListView : View {
 
 	@ObjectBinding var toDoItems: ToDoItems
 	@State var showingInput: Bool = false
+	@State var editingItem: ToDoItem?
 	@State var inputText: String = ""
 
 	var body: some View {
@@ -42,6 +43,11 @@ struct ToDoItemsListView : View {
 					   }
 					   .fixedSize()
 					}
+					.tapAction(count: 2) {
+						self.editingItem = item
+						self.inputText = item.title
+						self.showingInput = true
+					}
 				}
 				.navigationBarTitle(Text("Items"), displayMode: .inline)
 				.navigationBarItems(trailing: Button(action: {
@@ -52,11 +58,16 @@ struct ToDoItemsListView : View {
 // Doesn't currently appear to be anyway to make first responder, would need to switch this to a UITextField
 				TextField($inputText) {
 					if self.inputText.isEmpty == false {
-						let newItem = ToDoItem(id: UUID(), title: self.inputText, isSelected: true)
-						self.toDoItems.insert(newItem)
+						if let editingItem = self.editingItem {
+							editingItem.title = self.inputText
+						} else {
+							let newItem = ToDoItem(id: UUID(), title: self.inputText, isSelected: true)
+							self.toDoItems.insert(newItem)
+						}
 					}
 					self.showingInput = false
 					self.inputText = ""
+					self.editingItem = nil
 				}
 				.frame(height: 44.0)
 				.background(Rectangle().foregroundColor(.gray))
