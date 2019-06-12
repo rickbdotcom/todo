@@ -8,6 +8,8 @@
 
 import UIKit
 
+let toDoItemsStorage = ToDoItemsStorage(url: try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("toDoItems.json"))
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

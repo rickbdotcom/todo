@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,15 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		let window = UIWindow(frame: UIScreen.main.bounds)
-
-		let items = [
-			ToDoItem(id: UUID(), title: "Hello", isSelected: false),
-			ToDoItem(id: UUID(), title: "Goodbye", isSelected: false)
-		]
-		let toDoItems = ToDoItems()
-		toDoItems.items = items
-
-		window.rootViewController = UIHostingController(rootView: ContentView(toDoItems: toDoItems))
+		window.rootViewController = ToDoItemsListView.controller(toDoItems: toDoItemsStorage.toDoItems)
 		self.window = window
 		window.makeKeyAndVisible()
 	}
