@@ -28,6 +28,30 @@ struct UIButtonView: UIViewRepresentable {
 	}
 }
 
+/// Bug in TextField commit now in beta 2
+struct UITextFieldView: UIViewRepresentable {
+
+	let textField: UITextField
+
+	init(_ inputText: Binding<String>, configure: ((UITextField) -> Void)? = nil, commit: @escaping () -> Void) {
+		textField = UITextField()
+		textField.on(.editingChanged) { (textField: UITextField) in
+			inputText.binding.value = textField.text ?? ""
+		}
+		textField.on(.editingDidEndOnExit) { _ in
+			commit()
+		}
+		configure?(textField)
+	}
+
+    func makeUIView(context: Context) -> UITextField {
+		return textField
+	}
+
+	func updateUIView(_ uiView: UITextField, context: Context) {
+	}
+}
+
 /// idea for generic UIViewRepresentable wrapper
 struct UIKitView<T: UIView>: UIViewRepresentable {
 	let view: T
@@ -39,3 +63,4 @@ struct UIKitView<T: UIView>: UIViewRepresentable {
 	func updateUIView(_ uiView: T, context: Context) {
 	}
 }
+

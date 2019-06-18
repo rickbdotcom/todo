@@ -12,7 +12,7 @@ import Foundation
 class ToDoItemsStorage {
 	let url: URL
 	let toDoItems: ToDoItems
-	var listener: Cancellable!
+	var listener: AnyCancellable!
 
 	init(url: URL) {
 		self.url = url
@@ -22,13 +22,9 @@ class ToDoItemsStorage {
 		} catch {
 			toDoItems = ToDoItems()
 		}
-		self.listener = toDoItems.didChange.sink { [weak self] in
+		self.listener = AnyCancellable(toDoItems.didChange.sink { [weak self] in
 			self?.save()
-		}
-	}
-
-	deinit {
-		self.listener.cancel()
+		})
 	}
 
 	func save() {

@@ -56,7 +56,10 @@ struct ToDoItemsListView : View {
 			}
 			if showingInput {
 // Doesn't currently appear to be anyway to make first responder, would need to switch this to a UITextField
-				TextField($inputText) {
+//				TextField($inputText) {
+				UITextFieldView($inputText, configure: {
+					$0.becomeFirstResponder()
+				}) {
 					if self.inputText.isEmpty == false {
 						if let editingItem = self.editingItem {
 							editingItem.title = self.inputText
