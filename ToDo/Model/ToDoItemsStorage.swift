@@ -8,11 +8,16 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class ToDoItemsStorage {
 	let url: URL
-	let toDoItems: ToDoItems
-
+	@ObservedObject var toDoItems: ToDoItems {
+		didSet {
+			save()
+		}
+	}
+	var subscription: AnyCancellable!
 	init(url: URL) {
 		self.url = url
 		do {
@@ -21,7 +26,7 @@ class ToDoItemsStorage {
 		} catch {
 			toDoItems = ToDoItems()
 		}
-		_ = toDoItems.willChange.sink { [weak self] in
+		self.subscription = toDoItems.objectWillChange.sink { [weak self] in
 			self?.save()
 		}
 	}

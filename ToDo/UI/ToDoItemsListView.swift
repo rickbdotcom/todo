@@ -9,13 +9,6 @@
 import SwiftUI
 import UIKit
 
-// We can define the protocol conformance here instead in definition to avoid import SwiftUI framework there (which would make the preview canvas display)
-extension ToDoItem: Identifiable {
-}
-
-extension ToDoItems: ObservableObject {
-}
-
 struct ToDoItemsListView : View {
 
 	static func controller(toDoItems: ToDoItems) -> UIViewController {

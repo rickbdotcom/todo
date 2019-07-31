@@ -10,11 +10,24 @@ import Foundation
 import Combine
 import SwiftUI
 
-class ToDoItem: Codable {
+class ToDoItem: Codable, ObservableObject, Identifiable {
 	let id: UUID
-	var title: String { didSet { didChange.send(()) } }
-	var isSelected: Bool { didSet { didChange.send(()) } }
-	let didChange = PassthroughSubject<Void, Never>()
+	@Published var title: String
+	@Published var isSelected: Bool
+
+	required init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		id = try values.decode(UUID.self, forKey: .id)
+		title = try values.decode(String.self, forKey: .title)
+		isSelected = try values.decode(Bool.self, forKey: .isSelected)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(id, forKey: .id)
+		try container.encode(title, forKey: .title)
+		try container.encode(isSelected, forKey: .isSelected)
+	}
 
 	init(id: UUID, title: String, isSelected: Bool) {
 		self.id = id
@@ -27,21 +40,19 @@ class ToDoItem: Codable {
 	}
 }
 
-class ToDoItems {
+class ToDoItems: ObservableObject {
 
-	private(set) var items: [ToDoItem] = [] {
-		didSet {
-			willChange.send(())
+	@Published private(set) var items: [ToDoItem] = [] {
+		willSet {
 			listeners.forEach { $0.cancel() }
-			items.forEach { item in
-				listeners.append(item.didChange.sink { [unowned self] in
+			newValue.forEach { item in
+				listeners.append(item.objectWillChange.sink { [unowned self] in
 					self.set(items: self.items)
 				})
 			}
 		}
 	}
 	var listeners = [Cancellable]()
-	let willChange = PassthroughSubject<Void, Never>()
 	
 	init(items: [ToDoItem] = []) {
 		set(items: items)
