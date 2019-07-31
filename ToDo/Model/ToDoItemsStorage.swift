@@ -21,7 +21,7 @@ class ToDoItemsStorage {
 		} catch {
 			toDoItems = ToDoItems()
 		}
-		toDoItems.didChange.sink { [weak self] in
+		_ = toDoItems.willChange.sink { [weak self] in
 			self?.save()
 		}
 	}

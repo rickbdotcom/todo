@@ -10,10 +10,10 @@ import SwiftUI
 import UIKit
 
 // We can define the protocol conformance here instead in definition to avoid import SwiftUI framework there (which would make the preview canvas display)
-extension ToDoItem: Identifiable, BindableObject {
+extension ToDoItem: Identifiable {
 }
 
-extension ToDoItems: BindableObject {
+extension ToDoItems: ObservableObject {
 }
 
 struct ToDoItemsListView : View {
@@ -22,7 +22,7 @@ struct ToDoItemsListView : View {
 		return UIHostingController(rootView: ToDoItemsListView(toDoItems: toDoItems))
 	}
 
-	@ObjectBinding var toDoItems: ToDoItems
+	@ObservedObject var toDoItems: ToDoItems
 	@State var showingInput: Bool = false
 	@State var editingItem: ToDoItem?
 	@State var inputText: String = ""
@@ -43,7 +43,7 @@ struct ToDoItemsListView : View {
 					   }
 					   .fixedSize()
 					}
-					.tapAction(count: 2) {
+					.onTapGesture(count: 2) {
 						self.editingItem = item
 						self.inputText = item.title
 						self.showingInput = true
@@ -74,7 +74,7 @@ struct ToDoItemsListView : View {
 				}
 				.frame(height: 44.0)
 				.background(Rectangle().foregroundColor(.gray))
-				.textFieldStyle(.roundedBorder)
+				.textFieldStyle(RoundedBorderTextFieldStyle())
 			}
 		}
 	}

@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class ToDoItem: Codable {
 	let id: UUID
@@ -30,7 +31,7 @@ class ToDoItems {
 
 	private(set) var items: [ToDoItem] = [] {
 		didSet {
-			didChange.send(())
+			willChange.send(())
 			listeners.forEach { $0.cancel() }
 			items.forEach { item in
 				listeners.append(item.didChange.sink { [unowned self] in
@@ -40,7 +41,7 @@ class ToDoItems {
 		}
 	}
 	var listeners = [Cancellable]()
-	let didChange = PassthroughSubject<Void, Never>()
+	let willChange = PassthroughSubject<Void, Never>()
 	
 	init(items: [ToDoItem] = []) {
 		set(items: items)
