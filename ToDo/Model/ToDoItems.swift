@@ -12,8 +12,9 @@ import SwiftUI
 
 class ToDoItem: Codable, ObservableObject, Identifiable {
 	let id: UUID
-	@Published var title: String
-	@Published var isSelected: Bool
+	@Published var title: String { didSet { objectDidChange.send(()) } }
+	@Published var isSelected: Bool { didSet { objectDidChange.send(()) } }
+	let objectDidChange = PassthroughSubject<Void, Never>()
 
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -43,16 +44,18 @@ class ToDoItem: Codable, ObservableObject, Identifiable {
 class ToDoItems: ObservableObject {
 
 	@Published private(set) var items: [ToDoItem] = [] {
-		willSet {
-			listeners.forEach { $0.cancel() }
-			newValue.forEach { item in
-				listeners.append(item.objectWillChange.sink { [unowned self] in
-					self.set(items: self.items)
+		didSet {
+			subscriptions.forEach { $0.cancel() }
+			items.forEach { item in
+				subscriptions.append(item.objectDidChange.sink { [weak self] in
+					if let self = self {
+						self.set(items: self.items)
+					}
 				})
 			}
 		}
 	}
-	var listeners = [Cancellable]()
+	var subscriptions = [Cancellable]()
 	
 	init(items: [ToDoItem] = []) {
 		set(items: items)
