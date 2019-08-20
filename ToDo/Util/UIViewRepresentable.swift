@@ -36,7 +36,7 @@ struct UITextFieldView: UIViewRepresentable {
 	init(_ inputText: Binding<String>, configure: ((UITextField) -> Void)? = nil, commit: @escaping () -> Void) {
 		textField = UITextField()
 		textField.on(.editingChanged) { (textField: UITextField) in
-			inputText.value = textField.text ?? ""
+			inputText.wrappedValue = textField.text ?? ""
 		}
 		textField.on(.editingDidEndOnExit) { _ in
 			commit()
