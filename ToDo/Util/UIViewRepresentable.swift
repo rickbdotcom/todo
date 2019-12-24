@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import ExtraKit
+import ExtraKitUI
 
 /// Needed this because of bug(?) with Button when inside a list row
 struct UIButtonView: UIViewRepresentable {

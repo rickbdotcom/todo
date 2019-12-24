@@ -5,9 +5,18 @@
         "package": "ExtraKit",
         "repositoryURL": "https://github.com/rickbdotcom/ExtraKit",
         "state": {
-          "branch": "swift/5.1",
-          "revision": "c5c8a7060c11c1686830f86c8c15f2973f07e42c",
-          "version": null
+          "branch": null,
+          "revision": "907fd428f399c95a1f794caa3821e182c98f4a7f",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "PromiseKit",
+        "repositoryURL": "https://github.com/mxcl/PromiseKit",
+        "state": {
+          "branch": null,
+          "revision": "80963d4317bcdc03891e0fbaa744f20511d1bc08",
+          "version": "6.12.0"
         }
       }
     ]

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D29D31C23B2798300951E47 /* ExtraKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0D29D31B23B2798300951E47 /* ExtraKitUI */; };
+		0D29D31E23B2798300951E47 /* ExtraKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0D29D31D23B2798300951E47 /* ExtraKitCore */; };
 		0D48100B22B09A86007954FB /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48100222B09A86007954FB /* Sequence.swift */; };
 		0D48100C22B09A86007954FB /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48100322B09A86007954FB /* UIViewRepresentable.swift */; };
 		0D48100D22B09A86007954FB /* ToDoItemsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48100522B09A86007954FB /* ToDoItemsListView.swift */; };
@@ -14,7 +16,6 @@
 		0D48100F22B09A86007954FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48100822B09A86007954FB /* SceneDelegate.swift */; };
 		0D48101022B09A86007954FB /* ToDoItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48100A22B09A86007954FB /* ToDoItems.swift */; };
 		0D48101222B09AC6007954FB /* ToDoItemsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48101122B09AC6007954FB /* ToDoItemsStorage.swift */; };
-		0D4E2A8F22B064F900DDA8B8 /* ExtraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0D4E2A8E22B064F900DDA8B8 /* ExtraKit */; };
 		0D8C74C022AE95FB005B6266 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C74BF22AE95FB005B6266 /* Assets.xcassets */; };
 		0D8C74C322AE95FB005B6266 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C74C222AE95FB005B6266 /* Preview Assets.xcassets */; };
 		0D8C74C622AE95FB005B6266 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C74C422AE95FB005B6266 /* LaunchScreen.storyboard */; };
@@ -40,7 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D4E2A8F22B064F900DDA8B8 /* ExtraKit in Frameworks */,
+				0D29D31C23B2798300951E47 /* ExtraKitUI in Frameworks */,
+				0D29D31E23B2798300951E47 /* ExtraKitCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +140,8 @@
 			);
 			name = ToDo;
 			packageProductDependencies = (
-				0D4E2A8E22B064F900DDA8B8 /* ExtraKit */,
+				0D29D31B23B2798300951E47 /* ExtraKitUI */,
+				0D29D31D23B2798300951E47 /* ExtraKitCore */,
 			);
 			productName = ToDo;
 			productReference = 0D8C74B622AE95FA005B6266 /* ToDo.app */;
@@ -169,7 +172,7 @@
 			);
 			mainGroup = 0D8C74AD22AE95FA005B6266;
 			packageReferences = (
-				0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */,
+				0D29D31A23B2798300951E47 /* XCRemoteSwiftPackageReference "ExtraKit" */,
 			);
 			productRefGroup = 0D8C74B722AE95FA005B6266 /* Products */;
 			projectDirPath = "";
@@ -400,21 +403,26 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */ = {
+		0D29D31A23B2798300951E47 /* XCRemoteSwiftPackageReference "ExtraKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rickbdotcom/ExtraKit";
 			requirement = {
-				branch = swift/5.1;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0D4E2A8E22B064F900DDA8B8 /* ExtraKit */ = {
+		0D29D31B23B2798300951E47 /* ExtraKitUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0D4E2A8D22B064F900DDA8B8 /* XCRemoteSwiftPackageReference "ExtraKit" */;
-			productName = ExtraKit;
+			package = 0D29D31A23B2798300951E47 /* XCRemoteSwiftPackageReference "ExtraKit" */;
+			productName = ExtraKitUI;
+		};
+		0D29D31D23B2798300951E47 /* ExtraKitCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D29D31A23B2798300951E47 /* XCRemoteSwiftPackageReference "ExtraKit" */;
+			productName = ExtraKitCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

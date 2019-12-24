@@ -74,18 +74,14 @@ struct ToDoItemsListView : View {
 }
 
 struct ToDoItemRow: View {
-	@State var toDoItem: ToDoItem
+	@ObservedObject var toDoItem: ToDoItem
 
 	var body: some View {
 		Button(action: {
 			self.toDoItem.isSelected.toggle()
 		}) {
 			HStack {
-				if toDoItem.isSelected {
-					Image(systemName: "star.fill")
-				} else {
-					Image(systemName: "star")
-				}
+				Image(systemName: toDoItem.isSelected ? "star.fill" : "star")
 				Text(toDoItem.title)
 			}
 		}
